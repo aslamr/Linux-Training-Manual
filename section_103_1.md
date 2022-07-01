@@ -4,7 +4,7 @@
 #### 1.1 [Overview](#overview)
 #### 1.2 [The Interactive Shell](#the-interactive-shell)
 #### 1.3 [Shell Variables](#shell-variables)
-#### 1.4 Wildcards
+#### 1.4 [Wildcards](#wildcards)
 #### 1.5 The Commnad History
 #### 1.6 Manpages and the whatis database   
   
