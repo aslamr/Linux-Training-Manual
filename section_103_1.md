@@ -240,8 +240,8 @@ By pressing **TAB**, the shell will complete the commands you have started typin
 | :------ | :------|
 | command1 ; command2 ; command3 | The three commands are run in sequence regardless of the success of the previous command |
 | command1 && command2 && command3 | Each command will execute only if the previous exit code is 0 (success) |
-| command1  command2  command3 | The next command will execute only if the previous exit code is not 0 (failure) |
-  
+| command1 \|\| command2 \|\| command3 | The next command will execute only if the previous exit code is not 0 (failure) |
+
 **The exec” command**
 
 This command is not a binary but rather is part of the shell. It is used to start other commands. Ordinarily if a command is executed, a sub-process is started. If the exec command is used to initiate the new program, it reoccupies the process used to start it. It replaces the current shell (in a script or the interactive shell).
