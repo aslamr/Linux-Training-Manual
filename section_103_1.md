@@ -214,3 +214,36 @@ You can recall commands by using the Up-arrow and Down-arrow on your keyboard. T
 | Ctrl+e | Go to the end of the line (Same as 'End') |
 
 The **bang (!)** key can be used to rerun a command.
+```bash  
+$ ! "runs the last command"
+$ !x "executes the latest command in the history list starting with an 'x'"
+$ !2 "runs command number 2 from the history output"	
+$ !-2 "runs the command before last"
+$ !^string1^string2 "run previous command and replace string1 by string2"
+
+"All commands work as expected except for line number 1, needs to be looke at"
+```
+**Other Commands**
+
+**Aliases**
+
+You can create aliases for commands needing many arguments. The format to create an alias is:
+```bash
+$ alias myprog='Command [options]{arguments}'
+```
+By typing alias alone at the command line, you will get a list of currently defined aliases.
+  
+By pressing **TAB**, the shell will complete the commands you have started typing in.
+  
+**Compound Commands**
+| Compound Commands| |
+| :------ | :------|
+| command1 ; command2 ; command3 | The three commands are run in sequence regardless of the success of the previous command |
+| command1 && command2 && command3 | Each command will execute only if the previous exit code is 0 (success) |
+| command1  command2  command3 | The next command will execute only if the previous exit code is not 0 (failure) |
+  
+**The exec” command**
+
+This command is not a binary but rather is part of the shell. It is used to start other commands. Ordinarily if a command is executed, a sub-process is started. If the exec command is used to initiate the new program, it reoccupies the process used to start it. It replaces the current shell (in a script or the interactive shell).
+
+When the new command terminates, control is not passed back to the calling shell, but returns to the process that called the shell used to make the exec call.
