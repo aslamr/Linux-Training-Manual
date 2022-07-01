@@ -144,7 +144,7 @@ ls /usr/bin/?b*
 ```
 lists all programs having a 'b' as the second letter
   
-- [ ] is used to define a range of values.
+- '[ ]' is used to define a range of values.
 
 ```bash
 $ ls a[0-9]
