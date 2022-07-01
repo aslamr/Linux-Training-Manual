@@ -6,7 +6,7 @@
 #### 1.3 [Shell Variables](#shell-variables)
 #### 1.4 [Wildcards](#wildcards)
 #### 1.5 [The Commnad History](#the-command-history)
-#### 1.6 Manpages and the whatis database   
+#### 1.6 [Manpages and the whatis database](#manpages-and-the-whatis-database)  
   
 ---
 ### **1. 103.1 Working on the Command Line**
@@ -43,7 +43,7 @@ Shell commands are often of the form
 The bash shell uses the echo command to print text to the screen.
 
 ```bash
-$ echo "this is a short line
+$ echo "this is a short line"
 ```
   
 **Full/Relative Path**
