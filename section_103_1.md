@@ -4,9 +4,9 @@
 #### 1.1 [Overview](#overview)
 #### 1.2 [The Interactive Shell](#the-interactive-shell)
 #### 1.3 [Shell Variables](#shell-variables)
-#### 1.4 Wildcards
-#### 1.5 The Commnad History
-#### 1.6 Manpages and the whatis database   
+#### 1.4 [Wildcards](#wildcards)
+#### 1.5 [The Commnad History](#the-command-history)
+#### 1.6 [Manpages and the whatis database](#manpages-and-the-whatis-database)  
   
 ---
 ### **1. 103.1 Working on the Command Line**
@@ -43,7 +43,7 @@ Shell commands are often of the form
 The bash shell uses the echo command to print text to the screen.
 
 ```bash
-$ echo "this is a short line
+$ echo "this is a short line"
 ```
   
 **Full/Relative Path**
@@ -144,7 +144,7 @@ ls /usr/bin/?b*
 ```
 lists all programs having a 'b' as the second letter
   
-- [ ] is used to define a range of values.
+- \[ \] is used to define a range of values.
 
 ```bash
 $ ls a[0-9]
@@ -214,3 +214,180 @@ You can recall commands by using the Up-arrow and Down-arrow on your keyboard. T
 | Ctrl+e | Go to the end of the line (Same as 'End') |
 
 The **bang (!)** key can be used to rerun a command.
+```bash  
+$ ! "runs the last command"
+$ !x "executes the latest command in the history list starting with an 'x'"
+$ !2 "runs command number 2 from the history output"	
+$ !-2 "runs the command before last"
+$ !^string1^string2 "run previous command and replace string1 by string2"
+
+"All commands work as expected except for line number 1, needs to be looke at"
+```
+**Other Commands**
+
+**Aliases**
+
+You can create aliases for commands needing many arguments. The format to create an alias is:
+```bash
+$ alias myprog='Command [options]{arguments}'
+```
+By typing alias alone at the command line, you will get a list of currently defined aliases.
+  
+By pressing **TAB**, the shell will complete the commands you have started typing in.
+  
+**Compound Commands**
+| Compound Commands| |
+| :------ | :------|
+| command1 ; command2 ; command3 | The three commands are run in sequence regardless of the success of the previous command |
+| command1 && command2 && command3 | Each command will execute only if the previous exit code is 0 (success) |
+| command1 \|\| command2 \|\| command3 | The next command will execute only if the previous exit code is not 0 (failure) |
+
+**The "exec” command**
+
+This command is not a binary but rather is part of the shell. It is used to start other commands. Ordinarily if a command is executed, a sub-process is started. If the exec command is used to initiate the new program, it reoccupies the process used to start it. It replaces the current shell (in a script or the interactive shell).
+
+When the new command terminates, control is not passed back to the calling shell, but returns to the process that called the shell used to make the exec call.
+  
+```bash
+$ echo $$
+414
+
+$ bash
+
+$ echo $$
+455
+
+$ echo hello
+hello
+
+$ echo $$
+455
+
+$ exec echo hello
+hello
+
+$ echo $$
+414
+```
+The above shows control falling back to the second shell (process 455) after a straight forward echo and the first shell (process 414) using an exec.
+
+---
+
+### **Manpages and the whatis database**
+| **The manpages are organised in specific topics**| |
+| :------ | :------ |
+| NAME | the name of the item followed by a short one line description. |
+| SYNOPSYS | the syntax for the command |
+| DESCRIPTION | a longer description |
+| OPTIONS | a review of all possible options and their function |
+| FILES | files that are related to the current item (configuration files etc. |
+| SEE ALSO | other manpages related to the current topic |
+  
+These are the main topic sections one can expect to find in a manpage.
+  
+The **whatis** database stores the NAME section of all the manpages on the system. This is updated regularly through a daily cron.
+
+| The **whatis** database has the following two entries:              | |
+| :------ |:------ |
+| name (key) | - one line description |
+
+The syntax for **whatis** is:
+```bash
+whatis <string>
+```
+The output is the full NAME section of the manpages where string matched named(key)
+
+One can also use the man command to query the whatis database. The syntax is
+```bash
+man -k <string>
+```
+This command is similar to **apropos**. Unlike whatis this will query both the “name” and the “one line description” entries of the database. If the string matches a word in any of these fields the above query will return the full NAME section.
+
+Example: 
+```bash
+$ whatis last
+
+last (1)           - show a listing of last logged in users
+```
+
+```bash
+$ man -k last
+
+errno (3)         - number of last error
+fblocked (n)      - test whether the last input exhausted all avail...
+last (1)          - show a listing of last logged in users
+
+
+"I used 'last' as an example instead of 'lilo' that was used in the existing material. 'whatis lilo' returns 'nothing appropriate' in openSUSE"
+```
+  
+The filesystem hierachy standard, a recommended layout for Linux filesystems, recommends manpages to be kept in **/usr/share/man**. However additional locations can be searched using the **MANPATH** environment variable set in **/etc/manpath.config**. Each directory is further divided into subdirectories corresponding to manpage sections.
+  
+`"I changed /etc/man.config to /etc/manpath.config as that is how it is available in openSUSE"`
+  
+| **Manpages Sections** | |
+| :------ | :------ |
+| Section 1	| Information on executables |
+| Section 2 |	System calls, e.g mkdir(2) |
+| Section 3	| Library calls, e.g stdio(3) |
+| Section 4	| Devices (files in /dev) |
+| Section 5	| Configuration files and formats |
+| Section 6	| Games |
+| Section 7	| Macro packages |
+| Section 8	| Administration commands |
+| Section 9 |	Kernel routines |
+
+Sometimes manpages with the same name are present in more than one section.
+
+To access a specific section *N* one has to enter:
+  
+**man N command**
+
+Examples:
+```bash
+$ man mkdir
+$ man 2 mkdir
+
+$ man crontab
+$ man 2 crontab
+
+```
+
+**file**
+
+file is used to try and detect what type a particular file is.
+
+For example
+
+```bash
+$ file picture.png
+
+picture.png: PNG image, 179 x 179, 8-bit/color RGBA, non-interlaced
+```
+The utility will identify files that have been incorrectly named, so if picture.png had been named readme.txt the command “file readme.txt” would still identify the file as a png file
+  
+**uname**
+
+The uname command prints information relating to the kernel version, machine name, processor type and node name. It is most commonly used to identify which version of the kernel a machine is running.
+```bash
+
+$ uname -r
+```
+**pwd**
+
+This is a command which simply prints out the current working directory for the shell.
+```bash
+$ pwd
+```
+---
+Used files, terms and utilities:* bash
+- echo
+- env
+- exec
+- export
+- pwd
+- set
+- unset
+- man
+- uname
+- history 
